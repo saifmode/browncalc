@@ -44,12 +44,19 @@
 
 				<v-slider
 			          v-model="form.friendshipLevel"
+			          class="friendship-slider"
 			          :tick-labels="friendMarkers"
 			          :max="3"
 			          step="1"
 			          ticks="always"
 			          tick-size="4"
-			        ></v-slider>
+			        >
+			    	<template v-slot:thumb-label="props">
+			            
+			              blahh{{ props.value }}
+			            
+			          </template>    
+		        </v-slider>
 
 		    </v-form>
 
@@ -189,9 +196,6 @@ export default {
 				* this.friendshipMultiplier[this.friendMarkers[this.form.friendshipLevel]]
 			) / 100
 		}
-		// shelves() {
-		// 	return Math.round(this.form.height / 20);
-		// }
 	},
 	methods: {
 		validate () {
@@ -206,3 +210,9 @@ export default {
 	}
 }
 </script>
+
+<style>
+.friendship-slider {
+	font-size: 0.8em;
+}
+</style>
