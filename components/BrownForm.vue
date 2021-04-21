@@ -41,10 +41,10 @@
 					/>
 
 				</div>
-
+				
 				<v-slider
 					v-model="form.friendshipLevel"
-					class="friendship-slider"
+					style="font-size: 0.8em"
 					:tick-labels="friendMarkers"
 					:max="3"
 					step="1"
@@ -204,9 +204,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-.friendship-slider {
-	font-size: 0.8em;
-}
-</style>
