@@ -43,20 +43,14 @@
 				</div>
 
 				<v-slider
-			          v-model="form.friendshipLevel"
-			          class="friendship-slider"
-			          :tick-labels="friendMarkers"
-			          :max="3"
-			          step="1"
-			          ticks="always"
-			          tick-size="4"
-			        >
-			    	<template v-slot:thumb-label="props">
-			            
-			              blahh{{ props.value }}
-			            
-			          </template>    
-		        </v-slider>
+					v-model="form.friendshipLevel"
+					class="friendship-slider"
+					:tick-labels="friendMarkers"
+					:max="3"
+					step="1"
+					ticks="always"
+					tick-size="4"
+			    />
 
 		    </v-form>
 
