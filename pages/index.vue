@@ -1,13 +1,15 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <img src="breclaimed.jpg" style="width: 144px">
-      </div>
       <v-card>
         <v-card-title class="headline">
-          <div style="text-align: center; width: 100%">
-            Brown Reclaimed AI BlockChain Algorithm
+          <div style="display: flex; flex-direction: row">
+            <div style="text-align: center; width: 100%">
+              Brown Reclaimed Shelving Unit Price Calculator
+            </div>
+            <div class="text-center">
+              <img src="breclaimed.jpg" style="width: 89px">
+            </div>
           </div>
         </v-card-title>
         <v-card-text>
