@@ -7,38 +7,34 @@
 		      lazy-validation
 		    >
 
-				<div style="display: flex">
+				<v-text-field
+					v-model="form.height"
+					label="Height (cm)"
+					:max="300"
+					type="number"
+				/>
 
-					<v-text-field
-						v-model="form.height"
-						label="Height (cm)"
-						:max="300"
-						type="number"
-					/>
+				<v-text-field
+					v-model="form.width"
+					label="Width (cm)"
+					:max="400"
+					type="number"
+				/>
 
-					<v-text-field
-						v-model="form.width"
-						label="Width (cm)"
-						:max="400"
-						type="number"
-					/>
+				<v-text-field
+					v-model="form.depth"
+					append-icon="mdi-help-circle-outline"
+					label="Depth (cm)"
+					type="number"
+					@click:append="onClickHelpDepth"
+				/>
 
-					<v-text-field
-						v-model="form.depth"
-						append-icon="mdi-help-circle-outline"
-						label="Depth (cm)"
-						type="number"
-						@click:append="onClickHelpDepth"
-					/>
-
-					<v-text-field
-						disabled
-						label="Thickness (cm)"
-						type="number"
-						value="3.5"
-					/>
-
-				</div>
+				<v-text-field
+					disabled
+					label="Thickness (cm)"
+					type="number"
+					value="3.5"
+				/>
 
 				<div style="display: flex">
 
@@ -57,51 +53,46 @@
 				
 				<v-slider
 					v-model="form.friendshipLevel"
-					style="font-size: 0.8em"
+					style="font-size: 0.7em"
 					:tick-labels="friendMarkers"
 					:max="friendMarkers.length - 1"
 					step="1"
 					ticks="always"
 					tick-size="4"
 			    />
-			
-				<div>
-					<div>
-						<div style="display: flex">
-							<div style="margin: 0 12px">Fixings £{{ getCost(screwsCost) }}</div>
-							<div style="margin: 0 12px">Sandpaper £{{ getCost(sandingBeltsCost) }}</div>
-							<div style="margin: 0 12px">Waxing £{{ getCost(waxCosts) }}</div>
-						</div>
-					</div>
-					<div style="margin-bottom: 34px">
-						<div style="display: flex">
-							<div style="margin: 0 12px">Materials {{scaffLengthMetres }} m</div>
-							<div style="margin: 0 12px">Labour {{ displayedHours }} hrs</div>
-							<div style="margin: 0 12px">Weight {{Math.round(weight*100) /100}} kg</div>
-						</div>
-					</div>
+				
+				<v-text-field
+					v-model="form.distance"
+					label="Distance from Brown Reclaimed, S2 4BH (miles)"
+					type="number"
+				/>
+				<v-text-field
+					v-model="form.journeyTime"
+					label="Journey Time (hrs)"
+					type="number"
+				/>
 
-					<v-text-field
-						v-model="form.distance"
-						label="Distance from Brown Reclaimed, S2 4BH (miles)"
-						type="number"
-					/>
-					<v-text-field
-						v-model="form.journeyTime"
-						label="Journey Time (hrs)"
-						type="number"
-					/>
-					
-					<div style="font-size: 21px;">
+				<div style="display: flex; width: 100%; justify-content: space-between">
+					<div style="display: static; font-size: 21px;">
+						<div style="margin-bottom: 5px"><b>Total</b></div>
 						£{{ getCost(total) }}
 					</div>
+					
+					<div style="margin-bottom: 21px; text-align: right">
+						<div><b>Fixings</b> £{{ getCost(screwsCost) }}</div>
+						<div><b>Sandpaper</b> £{{ getCost(sandingBeltsCost) }}</div>
+						<div><b>Waxing</b> £{{ getCost(waxCosts) }}</div>
 
-					<div style="font-size: 13px;">
-						<b>Plus delivery: £{{ getCost(deliveryCost) }}</b>
+						<div><b>Materials</b> {{scaffLengthMetres }} m</div>
+						<div><b>Labour</b> {{ displayedHours }} hrs</div>
+						<div><b>Weight</b> {{Math.round(weight*100) /100}} kg</div>
 					</div>
 
-					<v-btn style="width: 1px; height: 1px"></v-btn>
 				</div>
+
+				<div>Delivery: £{{ getCost(deliveryCost) }}</div>
+
+				<v-btn style="width: 1px; height: 1px"></v-btn>
 			
 			</v-form>
 			<v-overlay

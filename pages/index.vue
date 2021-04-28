@@ -3,8 +3,18 @@
     <v-col cols="12" sm="8" md="6">
       <v-card>
         <v-card-title class="headline">
-          <div style="width: 100%; text-align: center; white-space: nowrap; font-size: 21px;">
-              Brown Reclaimed Shelving Unit Price Calculator
+          <div style="display: flex; justify-content: space-between; width: 100%;">
+            <div>
+              <div>
+                <b>Brown Reclaimed</b>
+              </div>
+              <div style="font-size: 17px;">
+                  Shelving Unit Price Calculator
+              </div>
+            </div>
+            <div>
+              <img src="breclaimed-sm.jpg" width="94">
+            </div>
           </div>
         </v-card-title>
         <v-card-text>
