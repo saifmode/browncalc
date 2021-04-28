@@ -7,25 +7,38 @@
 		      lazy-validation
 		    >
 
-		    	<v-text-field
-					v-model="form.height"
-					label="Height (cm)"
-					:max="300"
-					type="number"
-				/>
+				<div style="display: flex">
 
-				<v-text-field
-					v-model="form.width"
-					label="Width (cm)"
-					:max="400"
-					type="number"
-				/>
+					<v-text-field
+						v-model="form.height"
+						label="Height (cm)"
+						:max="300"
+						type="number"
+					/>
 
-				<v-text-field
-					v-model="form.depth"
-					label="Depth (cm)"
-					type="number"
-				/>
+					<v-text-field
+						v-model="form.width"
+						label="Width (cm)"
+						:max="400"
+						type="number"
+					/>
+
+					<v-text-field
+						v-model="form.depth"
+						append-icon="mdi-help-circle-outline"
+						label="Depth (cm)"
+						type="number"
+						@click:append="onClickHelpDepth"
+					/>
+
+					<v-text-field
+						disabled
+						label="Thickness (cm)"
+						type="number"
+						value="3.5"
+					/>
+
+				</div>
 
 				<div style="display: flex">
 
@@ -46,32 +59,76 @@
 					v-model="form.friendshipLevel"
 					style="font-size: 0.8em"
 					:tick-labels="friendMarkers"
-					:max="3"
+					:max="friendMarkers.length - 1"
 					step="1"
 					ticks="always"
 					tick-size="4"
 			    />
+			
+				<div>
+					<div>
+						<div style="display: flex">
+							<div style="margin: 0 12px">Fixings £{{ getCost(screwsCost) }}</div>
+							<div style="margin: 0 12px">Sandpaper £{{ getCost(sandingBeltsCost) }}</div>
+							<div style="margin: 0 12px">Waxing £{{ getCost(waxCosts) }}</div>
+						</div>
+					</div>
+					<div style="margin-bottom: 34px">
+						<div style="display: flex">
+							<div style="margin: 0 12px">Materials {{scaffLengthMetres }} m</div>
+							<div style="margin: 0 12px">Labour {{ displayedHours }} hrs</div>
+							<div style="margin: 0 12px">Weight {{Math.round(weight*100) /100}} kg</div>
+						</div>
+					</div>
 
-		    </v-form>
+					<v-text-field
+						v-model="form.distance"
+						label="Distance from Brown Reclaimed, S2 4BH (miles)"
+						type="number"
+					/>
+					<v-text-field
+						v-model="form.journeyTime"
+						label="Journey Time (hrs)"
+						type="number"
+					/>
+					
+					<div style="font-size: 21px;">
+						£{{ getCost(total) }}
+					</div>
 
-		    <div>
-		    	<!-- <div>
-		    		Number of shelves I need: {{ shelves }}
-		    	</div> -->
-		    	<!-- Total metres: {{ scaffLengthCm }}<br> -->
-		    	<!-- <div style="display: flex">
-		    		<div style="margin-right: 34px">Screws: {{ screwsCost }}</div>
-		    		<div>Sanding belts cost: {{ sandingBeltsCost }}</div>
-		    	</div> -->
-		    	<div style="display: flex; margin-bottom: 34px">
-		    		<div style="margin-right: 34px">Labour hours: {{ displayedHours }}</div>
-		    		<div>Scaff metres: {{ totalScaffLengthCm }}</div>
-		    	</div>
-		    	
-			    <div style="font-size: 21px;">
-			    	£{{ total }}
-			    </div>
-		    </div>
+					<div style="font-size: 13px;">
+						<b>Plus delivery: £{{ getCost(deliveryCost) }}</b>
+					</div>
+
+					<v-btn style="width: 1px; height: 1px"></v-btn>
+				</div>
+			
+			</v-form>
+			<v-overlay
+				absolute
+				opacity="0.9"
+				:value="overlay"
+			>
+				<div style="text-align: center; margin: 34px">
+					<div v-if="helpText = 'depth'" style="text-align: left">
+						The shelf depth has a significant effect on the price.<br>
+						The price brackets are as follows:<br>
+						<ul>
+							<li>22cm</li>
+							<li>Less than 22cm</li>
+							<li>22cm to 32cm</li>
+							<li>33 or above</li>
+						</ul>
+						This is because the timber used is 22cm wide. Anything above or below this amount will require more material and/or labour hours. Please get in touch if you require more information.
+						
+					</div>
+					
+					<v-btn color="danger" @click="overlay=false">
+						Close
+					</v-btn>
+				</div>
+
+			</v-overlay>
 		  
 		</div>
 	</div>
@@ -81,14 +138,18 @@
 export default {
 	data() {
 		return {
+			helpText: '',
+			overlay: false,
 			valid: false,
 			form: {
-				height: 220,
-				width: 200,
+				height: 0,
+				width: 0,
 				depth: 22,
 				notched: false,
-				waxed: false,
-				friendshipLevel: 2,
+				waxed: true,
+				friendshipLevel: 3,
+				distance: 0,
+				journeyTime: 0,
 			},
 			standardPricePerMetre: {
 				// depth: null,
@@ -99,15 +160,21 @@ export default {
 			markup: 1.3,
 			friendMarkers: [
 		        'Legends',
-		        'Acquaintances',
+		        'Friends',
+				'Returns',
 		        'Normies',
 		        'Dickheads',
 		      ],
 		    friendshipMultiplier: {
 				'Legends': 0.85,
-				'Acquaintances': 0.9,
+				'Friends': 0.9,
+				'Returns': 0.95,
 				'Normies': 1,
 				'Dickheads': 1.2,
+			},
+			constants: {
+				deliveryCostPerMile: 0.4,
+				journeyCostPerHour: 40, 
 			}
 		}
 	},
@@ -180,15 +247,17 @@ export default {
 
 			return 0
 		},
+		weight() {
+			return this.scaffLengthMetres * 1.1;
+		},
+		deliveryCost() {
+			return (this.form.distance * this.constants.deliveryCostPerMile) + (this.form.journeyTime * this.constants.journeyCostPerHour)
+		},
 		total() {
 			let cost = ((this.scaffCost + this.labourCosts + this.waxCosts) * this.markup)
 			+ this.notchCosts + this.screwsCost + this.sandingBeltsCost
-			
-			return Math.round(
-				cost
-				* 100
-				* this.friendshipMultiplier[this.friendMarkers[this.form.friendshipLevel]]
-			) / 100
+
+			return cost * this.friendshipMultiplier[this.friendMarkers[this.form.friendshipLevel]]
 		}
 	},
 	methods: {
@@ -201,6 +270,20 @@ export default {
 		resetValidation () {
 			this.$refs.form.resetValidation()
 		},
+		onClickHelpDepth() {
+			this.helpText = "depth";
+			this.overlay = true;
+		},
+		getCost(cost) {
+			let roundedCost = (Math.round(cost * 100) / 100).toString();
+			let splitCost = roundedCost.split('.')
+
+			if (splitCost.length === 1) {
+				return roundedCost + '.00';
+			}
+
+			return splitCost[1].length > 1 ? roundedCost : roundedCost + '0';
+		}
 	}
 }
 </script>
