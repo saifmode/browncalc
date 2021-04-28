@@ -8,7 +8,7 @@
               <div>
                 <b>Brown Reclaimed</b>
               </div>
-              <div style="font-size: 17px;">
+              <div style="font-size: 17px; white-space: nowrap">
                   Shelving Unit Price Calculator
               </div>
             </div>
