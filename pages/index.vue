@@ -18,7 +18,7 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <BrownForm />
+          <b-r-app />
         </v-card-text>
       </v-card>
     </v-col>
