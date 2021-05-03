@@ -48,6 +48,8 @@ export default {
 				labour: 15,
 				notchLt: 30,
 				notchGt: 50,
+				petrol: 0.4,
+				vanHire: 40,
 			},
 			markup: 1.3,
 		};
@@ -57,13 +59,13 @@ export default {
 		 * Costs
 		 */
 		boardsCost() {
-			return this.costs.boards * this.boardsLength;
+			return this.costs.boards * this.boards;
 		},
 		fixingsCost() {
 			return this.costs.fixings + this.costs.fixings * Math.floor(this.fields.width.value / 100)
 		},
 		sandpaperCost() {
-			return this.costs.sandpaper + this.costs.sandpaper * this.boardsLength;
+			return this.costs.sandpaper + this.costs.sandpaper * Math.floor(this.boardsLengthCm / 100);
 		},
 		labourCost() {
 			return this.costs.labour * this.labourHours;
@@ -77,10 +79,16 @@ export default {
 		},
 		waxedCost() {
 			if (this.fields.waxed.value) {
-				return this.boardsLength;
+				return this.boardsArea;
 			}
 
 			return 0;
+		},
+		deliveryCost() {
+			return (
+				this.fields.distance.value * this.costs.petrol
+				+ this.fields.journeyTime.value * this.costs.vanHire
+			);
 		},
 		totalCost() {
 			const total = (
@@ -101,29 +109,33 @@ export default {
 		/**
 		 * Other outputs
 		 */
-		boardsLength() {
-			return Math.ceil(
-				(
-					(this.fields.height.value * 2)
-					+ (this.fields.width.value * 8)
-				)
-				/ 100
-			)
+		boardsLengthCm() {
+			return (
+				this.fields.height.value * 2
+				+ this.fields.width.value * 8
+			);
+		},
+		boards() {
+			return Math.ceil(this.boardsLengthCm / 100);
 		},
 		boardsArea() {
-			if (this.fields.depth.value <= 22) {
-				return this.boardsLength;
-			} else if (this.fields.depth.value > 22 && this.fields.depth.value <= 32) {
-				return this.boardsLength * 1.5;
-			} else if (this.fields.depth.value > 32) {
-				return this.boardsLength * 2;
-			};
+			let area = this.boardsLengthCm;
+			
+			if (this.fields.depth.value > 22 && this.fields.depth.value <= 32) {
+				area *= 1.5;
+			}
+
+			if (this.fields.depth.value > 32) {
+				area *= 2;
+			}
+
+			return Math.ceil(area / 100);
 		},
 		weight() {
-			return this.boardsLength * 1.1;
+			return Math.floor(this.boardsLengthCm / 100) * 1.1;
 		},
 		labourHours() {
-			let hours = this.boardsLength;
+			let hours = this.boards;
 
 			if (this.fields.waxed.value) {
 				hours += Math.ceil(this.boardsArea / 10);
@@ -175,7 +187,7 @@ export default {
 						label: 'm',
 						prepend: false,
 					},
-					value: this.boardsLength,
+					value: this.boards,
 				},
 				labour: {
 					label: 'Labour',
@@ -192,6 +204,14 @@ export default {
 						prepend: false,
 					},
 					value: Math.round(this.weight * 100) / 100,
+				},
+				delivery: {
+					label: 'Delivery',
+					unit: {
+						label: '£',
+						prepend: true,
+					},
+					value: this.deliveryCost,
 				}
 			}
 		}
