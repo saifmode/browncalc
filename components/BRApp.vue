@@ -1,6 +1,8 @@
 <template>
 	<div>
 		<b-r-form :fields="fields" />
+		<!-- <b-r-costs :fields="fields" /> -->
+		<b-r-report :fields="fields" />
 	</div>
 </template>
 
@@ -8,8 +10,8 @@
 export default {
 	data() {
 		return {
-			fields: [
-				{
+			fields: {
+				height: {
 					attrs: {
 						id: 'height',
 						is: 'v-text-field',
@@ -19,7 +21,7 @@ export default {
 					},
 					value: 0,
 				},
-				{
+				width: {
 					attrs: {
 						id: 'width',
 						is: 'v-text-field',
@@ -29,7 +31,7 @@ export default {
 					},
 					value: 0,
 				},
-				{
+				depth: {
 					attrs: {
 						id: 'depth',
 						is: 'v-text-field',
@@ -55,7 +57,7 @@ export default {
 						</p>`,
 					value: 22,
 				},
-				{
+				thickness: {
 					attrs: {
 						id: 'thickness',
 						disabled: true,
@@ -65,7 +67,7 @@ export default {
 					},
 					value: 3.5,
 				},
-				{
+				waxed: {
 					attrs: {
 						id: 'waxed',
 						is: 'v-checkbox',
@@ -73,7 +75,7 @@ export default {
 					},
 					value: true,
 				},
-				{
+				notched: {
 					attrs: {
 						id: 'notched',
 						is: 'v-checkbox',
@@ -81,7 +83,7 @@ export default {
 					},
 					value: false,
 				},
-				{
+				friendship: {
 					attrs: {
 						id: 'friendship',
 						is: 'v-slider',
@@ -98,9 +100,16 @@ export default {
 					    ticks: 'always',
 					    tickSize: 4,
 					},
+					multipliers: [
+						0.85,
+						0.9,
+						0.95,
+						1,
+						1.2,
+					],
 					value: 3,
 				},
-				{
+				distance: {
 					attrs: {
 						id: 'distance',
 						is: 'v-text-field',
@@ -109,22 +118,17 @@ export default {
 					},
 					value: 0,
 				},
-				{
+				journeyTime: {
 					attrs: {
-						id: 'journeyTime',
+						id: 'journey-time',
 						is: 'v-text-field',
 						label: 'Journey Time (hrs)',
 						type: 'number',
 					},
 					value: 0,
 				},
-			]
-		}
-	},
-	methods: {
-		getField(id) {
-			return this.fields.find(field => field.attrs.id === id);
-		},
+			},
+		};
 	},
 }
 </script>

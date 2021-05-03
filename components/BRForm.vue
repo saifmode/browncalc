@@ -16,7 +16,7 @@
 export default {
 	props: {
 		fields: {
-			type: Array,
+			type: Object,
 			required: true,
 		},
 	},

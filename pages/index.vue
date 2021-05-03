@@ -19,6 +19,8 @@
         </v-card-title>
         <v-card-text>
           <b-r-app />
+          <br><br><hr /><br><br>
+          <brown-form />
         </v-card-text>
       </v-card>
     </v-col>
@@ -36,3 +38,21 @@ export default {
   }
 }
 </script>
+
+<style>
+.d-flex {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.col {
+  flex-direction: column;
+}
+
+.right {
+  text-align: right;
+}
+</style>
