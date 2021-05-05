@@ -18,7 +18,7 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <BrownForm />
+          <b-r-app />
         </v-card-text>
       </v-card>
     </v-col>
@@ -36,3 +36,21 @@ export default {
   }
 }
 </script>
+
+<style>
+.d-flex {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.col {
+  flex-direction: column;
+}
+
+.right {
+  text-align: right;
+}
+</style>

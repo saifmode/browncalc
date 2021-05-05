@@ -1,3 +1,5 @@
+<!-- DEPRECATED -->
+
 <template>
 	<div>
 		<div id="app">
