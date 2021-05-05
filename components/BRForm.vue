@@ -1,7 +1,22 @@
 <template>
 	<v-form>
 		<div v-for="field in fields" :key="field.attrs.id">
-			<component
+			<v-text-field
+				v-if="field.attrs.is === 'v-text-field'"
+				v-bind="field.attrs"
+				v-model="field.value"
+				:append-icon='field.help ? "mdi-help-circle-outline" : null'
+				@click:append="$store.dispatch('updateHelpText', field.help)"
+			/>
+			<v-checkbox
+				v-else-if="field.attrs.is === 'v-checkbox'"
+				v-bind="field.attrs"
+				v-model="field.value"
+				:append-icon='field.help ? "mdi-help-circle-outline" : null'
+				@click:append="$store.dispatch('updateHelpText', field.help)"
+			/>
+			<v-slider
+				v-else-if="field.attrs.is === 'v-slider'"
 				v-bind="field.attrs"
 				v-model="field.value"
 				:append-icon='field.help ? "mdi-help-circle-outline" : null'
