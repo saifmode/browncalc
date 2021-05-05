@@ -10,6 +10,15 @@ export default {
 	data() {
 		return {
 			fields: {
+				test: {
+					attrs: {
+						id: 'blah',
+						is: 'input',
+						type: 'text',
+						placeholder: 'blah'
+					},
+					value: 'blah'
+				},
 				height: {
 					attrs: {
 						id: 'height',
