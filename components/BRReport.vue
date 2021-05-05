@@ -1,20 +1,22 @@
 <template>
 	<div class="d-flex row">
 		<div class="d-flex col">
-			<div>
+			<div style="margin-bottom: 3px;">
 				<b>
 					Total
 				</b>
 			</div>
-			<div>
+			<div style="font-size: 1.6em;">
 				£{{ getCostDisplay(totalCost) }}
 			</div>
 		</div>
 		<div class="d-flex col">
 			<div
 				v-for="output in outputs"
+				:key="output.label"
 				class="right"
 			>
+				<hr v-if="output.newSection" style="margin: 5px 0 5px 0;"/>
 				<span>
 					<b>
 						{{ output.label }}
@@ -212,6 +214,7 @@ export default {
 						prepend: true,
 					},
 					value: this.deliveryCost,
+					newSection: true,
 				}
 			}
 		}

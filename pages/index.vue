@@ -19,8 +19,6 @@
         </v-card-title>
         <v-card-text>
           <b-r-app />
-          <br><br><hr /><br><br>
-          <brown-form />
         </v-card-text>
       </v-card>
     </v-col>
