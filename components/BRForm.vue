@@ -1,10 +1,11 @@
 <template>
 	<v-form>
-		<div v-for="field in fields">
+		<div v-for="field in fields" :key="field.attrs.id">
 			<component
 				v-bind="field.attrs"
 				v-model="field.value"
 				:append-icon='field.help ? "mdi-help-circle-outline" : null'
+				:is="field.attrs.is"
 				@click:append="$store.dispatch('updateHelpText', field.help)"
 			/>
 		</div>
