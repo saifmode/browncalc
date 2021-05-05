@@ -1,6 +1,8 @@
 <template>
 	<v-form>
 		<div v-for="field in fields" :key="field.attrs.id">
+			TEST!
+			{{field}}
 			<component
 				v-bind="field.attrs"
 				v-model="field.value"
