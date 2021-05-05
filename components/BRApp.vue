@@ -1,7 +1,6 @@
 <template>
-	<div>
+	<div id="app">
 		<b-r-form :fields="fields" />
-		<!-- <b-r-costs :fields="fields" /> -->
 		<b-r-report :fields="fields" />
 	</div>
 </template>
