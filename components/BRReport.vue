@@ -7,7 +7,7 @@
 				</b>
 			</div>
 			<div style="font-size: 1.6em;">
-				£{{ getCostDisplay(totalCost) }}
+				£{{ totalCost.toFixed(2) }}
 			</div>
 		</div>
 		<div class="d-flex col">
@@ -165,7 +165,7 @@ export default {
 						label: '£',
 						prepend: true,
 					},
-					value: this.getCostDisplay(this.fixingsCost),
+					value: this.fixingsCost.toFixed(2),
 				},
 				sandpaper: {
 					label: 'Sandpaper',
@@ -173,7 +173,7 @@ export default {
 						label: '£',
 						prepend: true,
 					},
-					value: this.getCostDisplay(this.sandpaperCost),
+					value: this.sandpaperCost.toFixed(2),
 				},
 				waxing: {
 					label: 'Waxing',
@@ -181,7 +181,7 @@ export default {
 						label: '£',
 						prepend: true,
 					},
-					value: this.getCostDisplay(this.waxedCost),
+					value: this.waxedCost.toFixed(2),
 				},
 				materials: {
 					label: 'Materials',
@@ -213,23 +213,11 @@ export default {
 						label: '£',
 						prepend: true,
 					},
-					value: this.deliveryCost,
+					value: this.deliveryCost.toFixed(2),
 					newSection: true,
 				}
 			}
 		}
 	},
-	methods: {
-		getCostDisplay(cost) {
-			let roundedCost = (Math.round(cost * 100) / 100).toString();
-			let splitCost = roundedCost.split('.')
-
-			if (splitCost.length === 1) {
-				return roundedCost + '.00';
-			}
-
-			return splitCost[1].length > 1 ? roundedCost : roundedCost + '0';
-		}
-	}
 }
 </script>
