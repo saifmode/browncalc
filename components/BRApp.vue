@@ -95,11 +95,54 @@ export default {
 						Does your shelving unit require notching to fit around skirting boards, plug sockets, or anything similar?
 					</p>`,
 				},
+				divisionSpeciality: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Speciality Shelves"
+				},
+				collapsing: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'collapsing',
+						label: "Collapsing",
+					},
+					value: false,
+				},
+				melting: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'melting',
+						label: "Melting",
+					},
+					value: false,
+				},
+				irregularDepth: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'irregularDepth',
+						label: "Irregular Depth",
+					},
+					value: false,
+				},
+				multiBrown: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'multiBrown',
+						label: "Multi-brown",
+					},
+					value: false,
+				},
+				divisionFriendship: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Customer Type"
+				},
 				friendship: {
 					attrs: {
 						id: 'friendship',
 						is: 'v-slider',
-						label: 'Customer Type',
 						max: 4,
 						step: 1,
 						style: 'font-size: 0.7em',
@@ -122,6 +165,12 @@ export default {
 					],
 					value: 3,
 				},
+				divisionDelivery: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Delivery"
+				},
 				distance: {
 					attrs: {
 						id: 'distance',
@@ -139,6 +188,12 @@ export default {
 						type: 'number',
 					},
 					value: 0,
+				},
+				divisionCost: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Costs"
 				},
 			},
 		};

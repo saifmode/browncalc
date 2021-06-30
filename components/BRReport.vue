@@ -60,32 +60,6 @@ export default {
 		/**
 		 * Costs
 		 */
-		boardsCost() {
-			return this.costs.boards * this.boards;
-		},
-		fixingsCost() {
-			return this.costs.fixings + this.costs.fixings * Math.floor(this.fields.width.value / 100)
-		},
-		sandpaperCost() {
-			return this.costs.sandpaper + this.costs.sandpaper * Math.floor(this.boardsLengthCm / 100);
-		},
-		labourCost() {
-			return this.costs.labour * this.labourHours;
-		},
-		notchedCost() {
-			if (this.fields.notched.value) {
-				return this.fields.depth.value <= 22 ? this.costs.notchLt : this.costs.notchGt;
-			}
-
-			return 0;
-		},
-		waxedCost() {
-			if (this.fields.waxed.value) {
-				return this.boardsArea;
-			}
-
-			return 0;
-		},
 		deliveryCost() {
 			return (
 				this.fields.distance.value * this.costs.petrol
@@ -106,15 +80,51 @@ export default {
 				this.fields.friendship.value
 			]
 		},
+		boardsCost() {
+			return this.costs.boards * this.boards;
+		},
+		fixingsCost() {
+			if (!this.boardsLengthCm) {
+				return 0;
+			}
+
+			return this.costs.fixings + this.costs.fixings * Math.floor(this.fields.width.value / 100)
+		},
+		sandpaperCost() {
+			if (!this.boardsLengthCm) {
+				return 0;
+			}
+
+			return this.costs.sandpaper + this.costs.sandpaper * Math.floor(this.boardsLengthCm / 100);
+		},
+		labourCost() {
+			return this.costs.labour * this.labourHours;
+		},
+		notchedCost() {
+			if (this.fields.notched.value) {
+				return this.fields.depth.value <= 22 ? this.costs.notchLt : this.costs.notchGt;
+			}
+
+			return 0;
+		},
+		waxedCost() {
+			if (this.fields.waxed.value) {
+				return this.boardsArea;
+			}
+
+			return 0;
+		},
 		
 		/**
 		 * Other outputs
 		 */
 		boardsLengthCm() {
-			return (
+			let boardsLengthCm = (
 				this.fields.height.value * 2
 				+ this.fields.width.value * 8
 			);
+
+			return boardsLengthCm;
 		},
 		boards() {
 			let boardMeters = Math.ceil(this.boardsLengthCm / 100);
@@ -131,10 +141,18 @@ export default {
 				boardMeters *= 2;
 			}
 
+			if (this.fields.melting.value) {
+				boardMeters * 1.2;
+			}
+
+			if (this.fields.irregularDepth.value) {
+				boardMeters * 1.2;
+			}
+
 			return boardMeters;
 		},
 		boardsArea() {
-			let area = this.boardsLengthCm;
+			let area = this.boards;
 			
 			if (this.fields.depth.value > 22 && this.fields.depth.value <= 32) {
 				area *= 1.5;
@@ -144,7 +162,7 @@ export default {
 				area *= 2;
 			}
 
-			return Math.ceil(area / 100);
+			return Math.ceil(area);
 		},
 		weight() {
 			return Math.floor(this.boardsLengthCm / 100) * 1.1;
@@ -153,7 +171,13 @@ export default {
 			let hours = this.boards;
 
 			if (this.fields.waxed.value) {
-				hours += Math.ceil(this.boardsArea / 10);
+				let waxingHours = Math.ceil(this.boardsArea / 10);
+
+				if (this.fields.multiBrown.value) {
+					waxingHours *= 2;
+				}
+
+				hours += waxingHours;
 			}
 			
 			if (this.fields.depth.value < 22) {
@@ -173,6 +197,26 @@ export default {
 			if (this.fields.depth.value > 32) {
 				hours *= 2.5;
 			}
+
+			// Add specialty labour
+			
+			let collapsingHours = 0;
+			let meltingHours = 0;
+			let irregularDepthHours = 0;
+
+			if (this.fields.collapsing.value) {
+				collapsingHours = hours * 1.5;
+			}
+
+			if (this.fields.melting.value) {
+				meltingHours = hours * 3;
+			}
+
+			if (this.fields.irregularDepth.value) {
+				irregularDepthHours = hours * 1.5;
+			}
+
+			hours = hours + collapsingHours + meltingHours + irregularDepthHours;
 
 			return hours;
 		},
