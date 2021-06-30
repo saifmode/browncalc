@@ -74,6 +74,15 @@ export default {
 						label: 'Waxed',
 					},
 					value: true,
+					help: `
+					<p>
+						Wax is not essential but is highly recommended.
+					</p>
+					<p>
+						Available in a selection of colours, it will protect the wood from moisture, adding longevity to your shelves
+						to create a smooth, unmatchable finish.
+					</p>
+					`,
 				},
 				notched: {
 					attrs: {
@@ -82,6 +91,9 @@ export default {
 						label: 'Notched',
 					},
 					value: false,
+					help: `<p>
+						Does your shelving unit require notching to fit around skirting boards, plug sockets, or anything similar?
+					</p>`,
 				},
 				friendship: {
 					attrs: {

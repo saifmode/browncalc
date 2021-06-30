@@ -12,6 +12,7 @@
 				v-else-if="field.attrs.is === 'v-checkbox'"
 				v-bind="field.attrs"
 				v-model="field.value"
+				style="width: 25%;"
 				:append-icon='field.help ? "mdi-help-circle-outline" : null'
 				@click:append="$store.dispatch('updateHelpText', field.help)"
 			/>

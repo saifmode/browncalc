@@ -199,7 +199,7 @@ export default {
 					value: this.sandpaperCost.toFixed(2),
 				},
 				waxing: {
-					label: 'Waxing',
+					label: 'Wax',
 					unit: {
 						label: '£',
 						prepend: true,
