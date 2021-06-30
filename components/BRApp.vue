@@ -35,6 +35,7 @@ export default {
 						id: 'depth',
 						is: 'v-text-field',
 						label: 'Depth (cm)',
+						max: 42,
 						type: 'number',
 					},
 					help: `<p>
@@ -73,6 +74,15 @@ export default {
 						label: 'Waxed',
 					},
 					value: true,
+					help: `
+					<p>
+						Wax is not essential but is highly recommended.
+					</p>
+					<p>
+						Available in a selection of colours, it will protect the wood from moisture, adding longevity to your shelves
+						to create a smooth, unmatchable finish.
+					</p>
+					`,
 				},
 				notched: {
 					attrs: {
@@ -81,6 +91,53 @@ export default {
 						label: 'Notched',
 					},
 					value: false,
+					help: `<p>
+						Does your shelving unit require notching to fit around skirting boards, plug sockets, or anything similar?
+					</p>`,
+				},
+				divisionSpeciality: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Speciality Shelves"
+				},
+				collapsing: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'collapsing',
+						label: "Collapsing",
+					},
+					value: false,
+				},
+				melting: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'melting',
+						label: "Melting",
+					},
+					value: false,
+				},
+				irregularDepth: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'irregularDepth',
+						label: "Irregular Depth",
+					},
+					value: false,
+				},
+				multiBrown: {
+					attrs: {
+						is: 'v-checkbox',
+						id: 'multiBrown',
+						label: "Multi-brown",
+					},
+					value: false,
+				},
+				divisionFriendship: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Customer Type"
 				},
 				friendship: {
 					attrs: {
@@ -90,11 +147,11 @@ export default {
 						step: 1,
 						style: 'font-size: 0.7em',
 						tickLabels: [
-					        'Legends',
-					        'Friends',
-							'Returns',
-					        'Normies',
-					        'Dickheads',
+					        'Legend',
+					        'Friend',
+							'Returning',
+					        'New',
+					        'Dickhead',
 					      ],
 					    ticks: 'always',
 					    tickSize: 4,
@@ -107,6 +164,12 @@ export default {
 						1.2,
 					],
 					value: 3,
+				},
+				divisionDelivery: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Delivery"
 				},
 				distance: {
 					attrs: {
@@ -125,6 +188,12 @@ export default {
 						type: 'number',
 					},
 					value: 0,
+				},
+				divisionCost: {
+					attrs: {
+						is: 'division',
+					},
+					value: "Costs"
 				},
 			},
 		};
