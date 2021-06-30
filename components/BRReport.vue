@@ -107,7 +107,6 @@ export default {
 			]
 		},
 		
-
 		/**
 		 * Other outputs
 		 */
@@ -118,7 +117,21 @@ export default {
 			);
 		},
 		boards() {
-			return Math.ceil(this.boardsLengthCm / 100);
+			let boardMeters = Math.ceil(this.boardsLengthCm / 100);
+			
+			if (this.depth > 22 && this.depth <= 25) {
+				boardMeters * 1.2;
+			}
+
+			if (this.depth > 25 && this.depth <= 32) {
+				boardMeters * 1.5;
+			}
+
+			if (this.depth > 32) {
+				boardMeters *= 2;
+			}
+
+			return boardMeters;
 		},
 		boardsArea() {
 			let area = this.boardsLengthCm;
@@ -144,11 +157,21 @@ export default {
 			}
 			
 			if (this.fields.depth.value < 22) {
-				hours = hours * 1.2
+				hours *= 1.2;
 			}
 
-			if (this.fields.depth.value > 22) {
-				hours = hours * 2
+			// 22cm is no change to hours
+
+			if (this.fields.depth.value > 22 && this.fields.depth.value <= 25) {
+				hours *= 1.8;
+			}
+			
+			if (this.fields.depth.value > 25 && this.fields.depth.value <= 32) {
+				hours *= 2;
+			}
+
+			if (this.fields.depth.value > 32) {
+				hours *= 2.5;
 			}
 
 			return hours;
@@ -183,8 +206,16 @@ export default {
 					},
 					value: this.waxedCost.toFixed(2),
 				},
+				materialCost: {
+					label: 'Material cost',
+					unit: {
+						label: '£',
+						prepend: true,
+					},
+					value: this.boardsCost.toFixed(2),
+				},
 				materials: {
-					label: 'Materials',
+					label: 'Material length',
 					unit: {
 						label: 'm',
 						prepend: false,
@@ -197,7 +228,7 @@ export default {
 						label: 'hrs',
 						prepend: false,
 					},
-					value: this.labourHours,
+					value: this.labourHours.toFixed(2),
 				},
 				weight: {
 					label: 'Weight',
