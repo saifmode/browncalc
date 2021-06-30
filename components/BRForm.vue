@@ -18,7 +18,7 @@
 				v-else-if="field.attrs.is === 'v-checkbox'"
 				v-bind="field.attrs"
 				v-model="field.value"
-				style="width: 28%;"
+				style="width: 40%;"
 				:append-icon='field.help ? "mdi-help-circle-outline" : null'
 				:disabled="field.attrs.id === 'multiBrown' ? multiBrownDisabled : false"
 				@click="onClickCheckbox(field.attrs.id)"
